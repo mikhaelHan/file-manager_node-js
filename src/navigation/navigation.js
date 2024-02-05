@@ -1,7 +1,7 @@
 const { cwd, chdir } = process;
 import path from 'path';
 import Path from '../services/Path.js';
-import { validationIsFile } from '../validation/validation.js';
+import { validationIsFolder } from '../validation/validation.js';
 
 
 export const navigationUp = () => {
@@ -10,7 +10,7 @@ export const navigationUp = () => {
 }
 
 export const navigationDeep = async (directory) => {
-  const isFolder = await validationIsFile(directory);
+  const isFolder = await validationIsFolder(directory);
 
   if (!isFolder) return false;
 

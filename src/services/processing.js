@@ -1,5 +1,6 @@
 import { navigationUp, navigationDeep } from '../navigation/navigation.js';
 import printList from '../print-list/printList.js';
+import { readFile, addFile } from '../handling-files/handlingFiles.js';
 import Path from './Path.js';
 
 async function processing(line) {
@@ -18,6 +19,17 @@ async function processing(line) {
 
     case 'ls':
       await printList();
+      break;
+
+
+    case 'cat':
+      const isfileToRead = await readFile(args[1]);
+      if (!isfileToRead) console.log(`Invalid input: there is no such file "${args[1]}"...`);
+      break;
+
+    case 'add':
+      const isfileToAdd = await addFile(args[1]);
+      if (!isfileToAdd) console.log(`Invalid input: such a file already exists "${args[1]}"...`);
       break;
 
     default:
