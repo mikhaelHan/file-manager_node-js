@@ -3,6 +3,7 @@ import printList from '../print-list/printList.js';
 import { readFile, addFile, renameFile, copyFile, moveFile, removeFile } from '../handling-files/handlingFiles.js';
 import Path from './Path.js';
 import printOsInformation from '../os-information/osInformation.js';
+import calculateHash from '../hash/calculateHash.js';
 
 async function processing(line) {
   const args = line.split(' ');
@@ -57,6 +58,12 @@ async function processing(line) {
 
     case 'os':
       await printOsInformation(args[1]);
+      break;
+
+
+    case 'hash':
+      const isFileToCalcHash = await calculateHash(args[1]);
+      if (!isFileToCalcHash) console.log(`Invalid input: there is no such file "${args[1]}"...`);
       break;
 
 
