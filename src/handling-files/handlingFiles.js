@@ -1,10 +1,10 @@
 import Path from '../services/Path.js'
-import { validationIsFile } from '../validation/validation.js';
+import { validationIsFile, validationIsFolder } from '../validation/validation.js';
 import fs from 'fs';
 import fsp from 'fs/promises';
 import path from 'path';
 import { stdout } from 'process';
-import { finished } from 'stream/promises';
+import { pipeline, finished } from 'stream/promises';
 
 
 export const readFile = async (file) => {
@@ -45,6 +45,22 @@ export const renameFile = async (oldFile, newFile) => {
   return true;
 }
 
+export const copyFile = async (file, directory) => {
+
+  const __dirname = Path.getPath();
+  const isFile = await validationIsFile(file);
+  const isDirectory = await validationIsFolder(directory)
+
+  if (!isFile || !isDirectory) return false;
+
+  const readStream = fs.createReadStream(path.join(__dirname, file));
+  const writeStream = fs.createWriteStream(path.join(__dirname, directory, path.basename(file)));
+
+  await pipeline(readStream, writeStream);
+
+  return true;
+}
+
 export const removeFile = async (file) => {
 
   const __dirname = Path.getPath();
@@ -53,6 +69,16 @@ export const removeFile = async (file) => {
   if (!isFile) return false;
 
   await fsp.unlink(path.join(__dirname, file));
+
+  return true;
+}
+
+export const moveFile = async (file, directory) => {
+  const isCopyFile = await copyFile(file, directory);
+
+  if (!isCopyFile) return false;
+
+  await removeFile(file);
 
   return true;
 }

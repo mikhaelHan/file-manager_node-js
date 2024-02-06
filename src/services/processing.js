@@ -1,6 +1,6 @@
 import { navigationUp, navigationDeep } from '../navigation/navigation.js';
 import printList from '../print-list/printList.js';
-import { readFile, addFile, renameFile, removeFile } from '../handling-files/handlingFiles.js';
+import { readFile, addFile, renameFile, copyFile, moveFile, removeFile } from '../handling-files/handlingFiles.js';
 import Path from './Path.js';
 
 async function processing(line) {
@@ -35,6 +35,16 @@ async function processing(line) {
       case 'rn':
       const isfileToRename = await renameFile(args[1], args[2]);
       if (!isfileToRename) console.log(`Invalid input: there is no such file "${args[1]}"...`);
+      break;
+
+      case 'cp':
+      const isfileToCopy = await copyFile(args[1], args[2]);
+      if (!isfileToCopy) console.log(`Invalid input: there is no such file "${args[1]}" or no such directory "${args[2]}"...`);
+      break;
+
+      case 'mv':
+      const isfileToMove = await moveFile(args[1], args[2]);
+      if (!isfileToMove) console.log(`Invalid input: there is no such file "${args[1]}" or no such directory "${args[2]}"...`);
       break;
 
       case 'rm':
