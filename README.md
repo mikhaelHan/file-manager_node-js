@@ -14,16 +14,16 @@ npm run start -- --username=your_username
 
 ### Navigation & working directory (nwd)
 - up
-- cd data
+- cd src/data
 - ls
 
 ### Basic operations with files
-- cat data/test.md
-- add test_new.md
-- rn data/test.md newTest.md
-- cp data/test.md src/handlers
-- mv data/test.md src/handlers
-- rm data/test.md or rm src/handlers/test.md (after prev command)
+- cat src/data/test.md
+- add test2.md
+- rn src/data/test.md newTest.md
+- cp src/data/test.md src/hash
+- mv src/data/test.md src/hash
+- rm srcdata/test.md
 
 ### Operating system info
 - os --EOL
@@ -33,6 +33,6 @@ npm run start -- --username=your_username
 - os --architecture
 
 ### Hash calculation
-- hash data/test.md
-- compress data/test.md data/test1.md
-- decompress data/test1.md data/test.md
+- hash src/data/test.md
+- compress src/data/test.md src/data/testZip.br
+- decompress src/data/testZip.br src/data/testDif.md
