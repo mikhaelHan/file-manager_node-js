@@ -4,6 +4,7 @@ import { readFile, addFile, renameFile, copyFile, moveFile, removeFile } from '.
 import Path from './Path.js';
 import printOsInformation from '../os-information/osInformation.js';
 import calculateHash from '../hash/calculateHash.js';
+import { compressFile } from '../zip/zip.js';
 
 async function processing(line) {
   const args = line.split(' ');
@@ -64,6 +65,17 @@ async function processing(line) {
     case 'hash':
       const isFileToCalcHash = await calculateHash(args[1]);
       if (!isFileToCalcHash) console.log(`Invalid input: there is no such file "${args[1]}"...`);
+      break;
+
+
+    case 'compress':
+      const isFileToCompress = await compressFile(args[1], args[2], true);
+      if (!isFileToCompress) console.log(`Invalid input: there is no such file "${args[1]}" or no such directory "${args[2]}"...`);
+      break;
+
+    case 'decompress':
+      const isFileToDeCompress = await compressFile(args[1], args[2], false);
+      if (!isFileToDeCompress) console.log(`Invalid input: there is no such file "${args[1]}" or no such directory "${args[2]}"...`);
       break;
 
 
